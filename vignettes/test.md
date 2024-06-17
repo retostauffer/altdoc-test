@@ -1,7 +1,8 @@
 # Test Vignette
 
 
-This is just a simple example to test `altdoc`.
+This is just a simple example to test `altdoc` in combination with
+GitHub actions and deployment on `gh-pages`.
 
 ``` r
 # Test: Package shoiuld be installed via
