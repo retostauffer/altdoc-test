@@ -22,3 +22,5 @@ hello("John", today = FALSE)
     Hy John, how are you doing?
 
     [1] "Hy John, how are you doing?"
+
+Test
