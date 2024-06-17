@@ -37,6 +37,7 @@ jobs:
       # Installing package, building altdoc pages, render site.
       - name: Build site
         run: |
+          install.packages("altdoc")
           install.packages(".", repos = NULL, type = "source")
           install.packages("pkgload")
           pkgload::load_all()
