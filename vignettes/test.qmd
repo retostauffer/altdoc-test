@@ -12,3 +12,5 @@ library("altdocreto")
 hello("John")
 hello("John", today = FALSE)
 ```
+
+Test
