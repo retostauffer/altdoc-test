@@ -1,0 +1,13 @@
+---
+title: "Test Vignette"
+---
+
+This is just a simple example to test `altdoc`.
+
+```{r}
+# Test: Package shoiuld be installed via
+#       GitHub workflow.
+library("altdocreto")
+hello("John")
+hello("John", today = FALSE)
+```

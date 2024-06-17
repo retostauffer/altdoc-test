@@ -17,7 +17,14 @@ No explicit return, but will return the message as printed
 as character invisibly.
 }
 \description{
-Just a dummy message to test altdoc.
+Just a dummy message to test altdoc. Throws a message as well
+as an explicit print inside the function; \code{message()}s are not
+shown in altdoc's rendered man pages by default?!
+}
+\examples{
+hello("John")
+hello("John", today = FALSE)
+
 }
 \author{
 Reto

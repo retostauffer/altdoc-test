@@ -1,0 +1,53 @@
+# Adjusted workflow from etiennebacher/altdoc/.github/workflow/altdoc.yaml
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  release:
+    types: [published]
+  workflow_dispatch:
+
+name: altdoc
+
+jobs:
+  altdoc:
+    runs-on: ubuntu-latest
+    # Only restrict concurrency for non-PR jobs
+    concurrency:
+      group: altdoc-${{ github.event_name != 'pull_request' || github.run_id }}
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      # Installing quarto
+      - uses: quarto-dev/quarto-actions/setup@v2
+
+      # Building boostrap CI environment for R/altdoc
+      - name: Get Script
+        run: curl -OLs https://eddelbuettel.github.io/r-ci/run.sh && chmod 0755 run.sh
+      - name: Bootstrap
+        run: ./run.sh bootstrap
+      - name: Dependencies
+        run: ./run.sh install_all
+
+      # Installing package, building altdoc pages, render site.
+      - name: Build site
+        run: |
+          install.packages(".", repos = NULL, type = "source")
+          install.packages("pkgload")
+          pkgload::load_all()
+          altdoc::render_docs(parallel = FALSE, freeze = FALSE)
+        shell: Rscript {0}
+
+      # Deploy rendered page via GitHub pages
+      - name: Deploy to GitHub pages 🚀
+        if: github.event_name != 'pull_request'
+        uses: JamesIves/github-pages-deploy-action@v4.4.1
+        with:
+          clean: false
+          branch: gh-pages
+          folder: docs

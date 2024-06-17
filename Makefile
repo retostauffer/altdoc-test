@@ -13,3 +13,11 @@ install:
 check:
 	make install
 	Rscript -e 'devtools::check()'
+
+render:
+	make install
+	Rscript -e 'altdoc::render_docs()'
+
+preview:
+	make render
+	Rscript -e 'altdoc::preview_docs()'
